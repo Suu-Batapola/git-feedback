@@ -32,10 +32,44 @@ jobs:
           ENCRYPTION_KEY: ${{ secrets.ENCRYPTION_KEY }}
 
       - name: Upload Build to artifact
-        uses: actions/upload-artifact@v7
+        uses: actions/upload-artifact@v4
         with:
           name: next-build
           path: .next
-          inclue-hiddel-files: true
+          include-hidden-files: true
           retention-days: 1
 
+  test:
+    name: Run Tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v7
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: '24'
+          cache: 'npm'
+
+      - name: Cache node modules
+        id: cache-npm
+        uses: actions/cache@v6
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+
+      - name: Install dependencies
+        if: steps.cache-npm.outputs.cache-hit != 'true'
+        run: npm ci
+
+      - name: Download build artifact
+        uses: actions/download-artifact@v8
+        with:
+          name: next-build
+          path: .next
+
+      - name: Run unit tests
+        run: npm run test
+        env:
+          ENCRYPTION_KEY: ${{ secrets.ENCRYPTION_KEY }}
