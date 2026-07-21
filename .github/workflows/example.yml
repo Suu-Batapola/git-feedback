@@ -13,6 +13,8 @@ jobs:
 
       - name: Setup node
         uses: actions/setup-node@v4
+        with:
+          cache: 'npm'
 
       - name: Install NPM Install
         run: npm ci
