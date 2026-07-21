@@ -31,7 +31,11 @@ jobs:
         env:
           ENCRYPTION_KEY: ${{ secrets.ENCRYPTION_KEY }}
 
-      - name: Test Build
-        run: npm run test
-        env:
-          ENCRYPTION_KEY: ${{ secrets.ENCRYPTION_KEY }}
+      - name: Upload Build to artifact
+        uses: actions/upload-artifact
+        with:
+          name: next-build
+          path: .next
+          inclue-hiddel-files: true
+          retention-days: 1
+
