@@ -16,6 +16,13 @@ jobs:
         with:
           cache: 'npm'
 
+      - name : Cache node modules
+        id: cache-npm
+        uses: actions/cache@v6
+        with:
+          path: node_module
+          key: ${{ runner.os}}-node-${{ hashFiles('**/package-lock.json') }}
+
       - name: Install NPM Install
         run: npm ci
 
