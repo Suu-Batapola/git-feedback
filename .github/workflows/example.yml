@@ -5,7 +5,7 @@ on:
     branchs : [testing]
 
 jobs:
-  example:
+  build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repo
@@ -41,6 +41,7 @@ jobs:
 
   test:
     name: Run Tests
+    needs: build
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
