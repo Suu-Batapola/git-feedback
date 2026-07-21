@@ -1,2 +1,6 @@
 name: Example
 
+on:
+  push:
+    branchs : [testing]
+
