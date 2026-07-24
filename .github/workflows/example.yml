@@ -10,7 +10,7 @@ jobs:
     steps:
     
     - name: Print repo details
-      run: 
+      run: |
         echo "Owner: ${{ github.repository_owner }}"
         echo "Repo: ${{ github.event.repository.name }}"
         echo "Event: ${{ github.event_name }}"
