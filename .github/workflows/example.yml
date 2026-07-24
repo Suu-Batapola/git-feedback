@@ -3,3 +3,10 @@ name: Example
 on:
   push:
     branchs : [testing]
+    
+jobs: 
+  example:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print
+      - run: echo "Hello World"
