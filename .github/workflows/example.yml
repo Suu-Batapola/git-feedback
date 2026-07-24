@@ -8,13 +8,17 @@ jobs:
   example:
     runs-on: ubuntu-latest
     steps:
-    
-    - name: Print repo details
-      run: |
-        echo "Owner: ${{ github.repository_owner }}"
-        echo "Repo: ${{ github.event.repository.name }}"
-        echo "Event: ${{ github.event_name }}"
-        echo "Branch: ${{ github.ref }}"
-        echo "Actor: ${{ github.actor }}"
-        echo "SHA: ${{ github.sha }}"
-       
+      - name: Checkout Repo
+        uses: actions/Checkout@v4
+
+      - name: Setup node
+        uses: actions/setup-node@v4
+
+      - name: Install NPM Install
+        run: npm ci
+
+      - name: Build Project
+        run: npm run build
+
+      - name: Test Build
+        run: npm run test
